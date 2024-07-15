@@ -5,14 +5,16 @@ TOPIC=${TOPIC:-allora-topic-1-worker}
 
 # Parse TOPIC_ID
 TOPIC_ID=$(echo "$TOPIC" | awk -F'-' '{print $3}')
-
+echo $TOPIC_ID
 # Determine the token based on TOPIC_ID
 case "$TOPIC_ID" in
-    1) TOKEN="eth" ;;
-    3) TOKEN="btc" ;;
-    5) TOKEN="sol" ;;
-    *) TOKEN="eth" ;; # Default action set to ETH for invalid TOPIC_ID
+    1) TOKEN="ETH" ;;
+    3) TOKEN="BTC" ;;
+    5) TOKEN="SOL" ;;
+    *) TOKEN="ETH" ;; # Default action set to ETH for invalid TOPIC_ID
 esac
+
+echo $TOKEN
 
 # Get the current block height
 block_height=$(curl -s https://allora-rpc.edgenet.allora.network/block | jq -r .result.block.header.height)
@@ -48,4 +50,3 @@ response=$(curl --silent --location 'http://localhost:6000/api/v1/functions/exec
 # Print the response
 echo "Response:"
 echo "$response" | jq .
-
