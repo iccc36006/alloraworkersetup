@@ -12,16 +12,6 @@ INPUT_YAML=$(docker-compose ls | grep basic-coin-prediction-node | awk '{print $
 # Define the output YAML file path
 OUTPUT_YAML=$(echo "$INPUT_YAML" | sed 's/[^/]*$/docker-compose-testnet.yml/')
 
-
-# Make your docker services down
-docker-compose down
-
-# Remove the existing containers and corresponding images
-echo "Stopping and removing existing Docker containers and images..."
-docker stop $(docker ps -aq) 2>/dev/null
-docker rm $(docker ps -aq) 2>/dev/null
-docker rmi -f $(docker images -aq) 2>/dev/null
-
 # Ensure the input file exists before proceeding
 if [ -f "$INPUT_YAML" ]; then
   # Copy the content of the input YAML to the output YAML
@@ -30,6 +20,15 @@ if [ -f "$INPUT_YAML" ]; then
   # Perform the necessary replacements
   sed -i -e 's|--allora-node-rpc-address=https://allora-rpc.edgenet.allora.network/|--allora-node-rpc-address=https://allora-rpc.testnet-1.testnet.allora.network/|' "$OUTPUT_YAML"
 
+  # Make your docker services down
+  docker-compose down
+
+  # Remove the existing containers and corresponding images
+  echo "Stopping and removing existing Docker containers and images..."
+  docker stop $(docker ps -aq) 2>/dev/null
+  docker rm $(docker ps -aq) 2>/dev/null
+  docker rmi -f $(docker images -aq) 2>/dev/null
+  
   echo "Migration complete. The output file is $OUTPUT_YAML. Making your docker services up now!"
   docker-compose --file "$OUTPUT_YAML" up -d
 else
