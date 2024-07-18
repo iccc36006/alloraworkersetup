@@ -110,7 +110,7 @@ done
 
 echo "Do not forget to save your seeds!" 
 echo
-echo "Request tokens from the faucet using your wallet | faucet link: https://faucet.edgenet.allora.network/"
+echo "Request tokens from the faucet using your wallet | faucet link: https://faucet.testnet-1.testnet.allora.network/"
 echo
 echo "Faucet step is required for worker registration"
 read -n 1 -s -r -p "Please obtain tokens from the faucet. Press any key to continue once done..."
@@ -215,7 +215,7 @@ services:
           --topic=$TOPIC \
           --allora-chain-key-name=$WALLET_NAME \
           --allora-chain-restore-mnemonic=$WALLET_SEED_PHRASE_ESCAPED \
-          --allora-node-rpc-address=https://allora-rpc.edgenet.allora.network/ \
+          --allora-node-rpc-address=https://allora-rpc.testnet-1.testnet.allora.network/ \
           --allora-chain-topic-id=$TOPIC_ID
     volumes:
       - ./worker-data:/data
