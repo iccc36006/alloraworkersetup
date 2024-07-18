@@ -6,6 +6,13 @@ echo
 echo "Faucet step is required for worker registration"
 read -n 1 -s -r -p "Please obtain tokens from the faucet. Press any key to continue once done..."
 
+# Extract the input YAML file path from the docker-compose ls output
+INPUT_YAML=$(docker-compose ls | grep basic-coin-prediction-node | awk '{print $3}')
+
+# Define the output YAML file path
+OUTPUT_YAML=$(echo "$INPUT_YAML" | sed 's/[^/]*$/docker-compose-testnet.yml/')
+
+
 # Make your docker services down
 docker-compose down
 
@@ -14,12 +21,6 @@ echo "Stopping and removing existing Docker containers and images..."
 docker stop $(docker ps -aq) 2>/dev/null
 docker rm $(docker ps -aq) 2>/dev/null
 docker rmi -f $(docker images -aq) 2>/dev/null
-
-# Extract the input YAML file path from the docker-compose ls output
-INPUT_YAML=$(docker-compose ls | grep basic-coin-prediction-node | awk '{print $3}')
-
-# Define the output YAML file path
-OUTPUT_YAML=$(echo "$INPUT_YAML" | sed 's/[^/]*$/docker-compose-testnet.yml/')
 
 # Ensure the input file exists before proceeding
 if [ -f "$INPUT_YAML" ]; then
