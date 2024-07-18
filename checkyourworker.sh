@@ -17,7 +17,7 @@ esac
 echo $TOKEN
 
 # Get the current block height
-block_height=$(curl -s https://allora-rpc.edgenet.allora.network/block | jq -r .result.block.header.height)
+block_height=$(curl -s https://allora-rpc.testnet-1.testnet.allora.network/block | jq -r .result.block.header.height)
 
 # Perform the curl request with the parsed topic and block height
 response=$(curl --silent --location 'http://localhost:6000/api/v1/functions/execute' \
