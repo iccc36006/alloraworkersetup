@@ -1,20 +1,28 @@
 #!/bin/bash
-# Prompt for topic input
-read -p "Enter topic (default: allora-topic-1-worker): " TOPIC
-TOPIC=${TOPIC:-allora-topic-1-worker}
+
+# Check if an argument is provided
+if [ -z "$1" ]; then
+  # Prompt for topic input if no argument is provided
+  read -p "Enter topic (default: allora-topic-1-worker): " TOPIC
+  TOPIC=${TOPIC:-allora-topic-1-worker}
+else
+  # Use the provided argument as the topic
+  TOPIC=$1
+fi
 
 # Parse TOPIC_ID
 TOPIC_ID=$(echo "$TOPIC" | awk -F'-' '{print $3}')
-echo $TOPIC_ID
+echo "Parsed TOPIC_ID: $TOPIC_ID"
+
 # Determine the token based on TOPIC_ID
 case "$TOPIC_ID" in
-    1) TOKEN="ETH" ;;
-    3) TOKEN="BTC" ;;
-    5) TOKEN="SOL" ;;
-    *) TOKEN="ETH" ;; # Default action set to ETH for invalid TOPIC_ID
+  1) TOKEN="ETH" ;;
+  3) TOKEN="BTC" ;;
+  5) TOKEN="SOL" ;;
+  *) TOKEN="ETH" ;; # Default action set to ETH for invalid TOPIC_ID
 esac
 
-echo $TOKEN
+echo "Token: $TOKEN"
 
 # Get the current block height
 block_height=$(curl -s https://allora-rpc.testnet-1.testnet.allora.network/block | jq -r .result.block.header.height)
