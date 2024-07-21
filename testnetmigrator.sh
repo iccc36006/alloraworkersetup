@@ -40,6 +40,6 @@ docker rm $(docker ps -aq) 2>/dev/null
 docker rmi -f $(docker images -aq) 2>/dev/null
 
 echo "Migration complete. The output file is $OUTPUT_YAML. Making your docker services up now!"
-docker-compose --file "$OUTPUT_YAML" up -d
+docker-compose --file "$OUTPUT_YAML" up --build -d
 
 
