@@ -34,8 +34,7 @@ sed -i -e 's|--allora-node-rpc-address=https://allora-rpc.edgenet.allora.network
 docker-compose down
 
 # Remove the existing containers and corresponding images
-echo "Stopping and removing existing Docker containers and images..."
-docker stop $(docker ps -aq) 2>/dev/null
+echo "Removing existing Docker containers and images..."
 docker rm $(docker ps -aq) 2>/dev/null
 docker rmi -f $(docker images -aq) 2>/dev/null
 
