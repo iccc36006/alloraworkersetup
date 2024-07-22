@@ -92,7 +92,7 @@ select choice in "1) Import" "2) Create New Wallet"; do
     case $REPLY in
         1)
             echo "Importing wallet!"
-            read -p "Enter the wallet name: " wallet_name
+            read -p "Enter the wallet name: " WALLET_NAME
             execute_with_prompt "allorad keys add $WALLET_NAME --recover"
             break
             ;;
